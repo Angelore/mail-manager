@@ -45,7 +45,7 @@ namespace MailManager.Utility
         }
     }
 
-    [ValueConversion(typeof(object), typeof(string))]
+    [ValueConversion(typeof(string), typeof(string))]
     public class LocalizationConverter : MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

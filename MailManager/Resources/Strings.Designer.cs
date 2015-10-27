@@ -61,6 +61,42 @@ namespace MailManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _About.
+        /// </summary>
+        internal static string MainWindowMenuAbout {
+            get {
+                return ResourceManager.GetString("MainWindowMenuAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Exit.
+        /// </summary>
+        internal static string MainWindowMenuExit {
+            get {
+                return ResourceManager.GetString("MainWindowMenuExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _File.
+        /// </summary>
+        internal static string MainWindowMenuFile {
+            get {
+                return ResourceManager.GetString("MainWindowMenuFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Help.
+        /// </summary>
+        internal static string MainWindowMenuHelp {
+            get {
+                return ResourceManager.GetString("MainWindowMenuHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MailManager 0.1.
         /// </summary>
         internal static string MainWindowTitle {

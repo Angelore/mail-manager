@@ -24,5 +24,10 @@ namespace MailManager
         {
             InitializeComponent();
         }
+
+        private void ExitMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

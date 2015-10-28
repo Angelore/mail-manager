@@ -18,14 +18,14 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" IsMainMenu="True">
             <MenuItem Header="{Binding Source=MainWindowMenuFile, Converter={u:LocalizationConverter}}">
-                <MenuItem Header="{Binding Source=MainWindowMenuExit, Converter={u:LocalizationConverter}}"/>
+                <MenuItem Header="{Binding Source=MainWindowMenuExit, Converter={u:LocalizationConverter}}" Click="ExitMenu_Click"/>
             </MenuItem>
             <Separator/>
             <MenuItem Header="{Binding Source=MainWindowMenuHelp, Converter={u:LocalizationConverter}}">
                 <MenuItem Header="{Binding Source=MainWindowMenuAbout, Converter={u:LocalizationConverter}}" />
             </MenuItem>
         </Menu>
-        <ScrollViewer Name="ViewPlaceholder" Grid.Row="1">
+        <ScrollViewer Name="ViewPlaceholder" Grid.Row="1" VerticalScrollBarVisibility="Auto">
 
         </ScrollViewer>
     </Grid>

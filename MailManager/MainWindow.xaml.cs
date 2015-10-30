@@ -29,5 +29,17 @@ namespace MailManager
         {
             this.Close();
         }
+
+        private void AboutMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var childWindow = new Window();
+            childWindow.Content = new AboutView();
+            childWindow.Owner = this;
+            childWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            childWindow.ResizeMode = ResizeMode.NoResize;
+            childWindow.MaxHeight = 300;
+            childWindow.MaxWidth = 500;
+            childWindow.ShowDialog();
+        }
     }
 }

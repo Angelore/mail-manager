@@ -20,9 +20,12 @@ namespace MailManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MenuCommands MenuCommands { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+            MenuCommands = new MenuCommands(this);
         }
 
         private void ExitMenu_Click(object sender, RoutedEventArgs e)
@@ -40,6 +43,13 @@ namespace MailManager
             childWindow.MaxHeight = 300;
             childWindow.MaxWidth = 500;
             childWindow.ShowDialog();
+        }
+
+        private void ExecuteMenuCommand(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = (MenuItem)sender;
+            string commandName = menuItem.CommandParameter.ToString();
+            MenuCommands.GetCommand(commandName)?.Execute();
         }
     }
 }

@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" IsMainMenu="True">
             <MenuItem Header="{Binding Source=MainWindowMenuFile, Converter={u:LocalizationConverter}}">
-                <MenuItem Header="{Binding Source=MainWindowMenuExit, Converter={u:LocalizationConverter}}" Click="ExitMenu_Click"/>
+                <MenuItem Header="{Binding Source=MainWindowMenuExit, Converter={u:LocalizationConverter}}" Click="ExecuteMenuCommand" CommandParameter="ExitCommand"/>
             </MenuItem>
             <Separator/>
             <MenuItem Header="{Binding Source=MainWindowMenuHelp, Converter={u:LocalizationConverter}}">

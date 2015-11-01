@@ -28,23 +28,6 @@ namespace MailManager
             MenuCommands = new MenuCommands(this);
         }
 
-        private void ExitMenu_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void AboutMenu_Click(object sender, RoutedEventArgs e)
-        {
-            var childWindow = new Window();
-            childWindow.Content = new AboutView();
-            childWindow.Owner = this;
-            childWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            childWindow.ResizeMode = ResizeMode.NoResize;
-            childWindow.MaxHeight = 300;
-            childWindow.MaxWidth = 500;
-            childWindow.ShowDialog();
-        }
-
         private void ExecuteMenuCommand(object sender, RoutedEventArgs e)
         {
             MenuItem menuItem = (MenuItem)sender;

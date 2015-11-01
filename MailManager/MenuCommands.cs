@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MailManager
 {
     internal class MenuCommands
     {
-        private MainWindow _window;
+        private Window _window;
         private List<BaseMenuCommand> _commands;
 
-        internal MenuCommands(MainWindow window)
+        internal MenuCommands(Window window)
         {
             _window = window;
             _commands = new List<BaseMenuCommand>()
             {
-                new ExitCommand(_window)
+                new ExitCommand(_window),
+                new AboutCommand(_window)
             };
         }
 
@@ -28,9 +30,9 @@ namespace MailManager
 
     internal class BaseMenuCommand
     {
-        protected MainWindow _window;
+        protected Window _window;
 
-        public BaseMenuCommand(MainWindow window)
+        public BaseMenuCommand(Window window)
         {
             _window = window;
         }
@@ -48,10 +50,10 @@ namespace MailManager
 
     internal class ExitCommand: BaseMenuCommand
     {
-        public ExitCommand(MainWindow window):base(window)
+        public ExitCommand(Window window):base(window)
         { }
 
-        override public void Execute()
+        public override void Execute()
         {
             _window.Close();
         }
@@ -59,6 +61,29 @@ namespace MailManager
         public override string CommandName()
         {
             return "ExitCommand";
+        }
+    }
+
+    internal class AboutCommand: BaseMenuCommand
+    {
+        public AboutCommand(Window window):base(window)
+        { }
+
+        public override void Execute()
+        {
+            var childWindow = new Window();
+            childWindow.Content = new AboutView();
+            childWindow.Owner = _window;
+            childWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            childWindow.ResizeMode = ResizeMode.NoResize;
+            childWindow.MaxHeight = 300;
+            childWindow.MaxWidth = 500;
+            childWindow.ShowDialog();
+        }
+
+        public override string CommandName()
+        {
+            return "AboutCommand";
         }
     }
 }

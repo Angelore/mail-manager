@@ -22,7 +22,7 @@
             </MenuItem>
             <Separator/>
             <MenuItem Header="{Binding Source=MainWindowMenuHelp, Converter={u:LocalizationConverter}}">
-                <MenuItem Header="{Binding Source=MainWindowMenuAbout, Converter={u:LocalizationConverter}}" Click="AboutMenu_Click"/>
+                <MenuItem Header="{Binding Source=MainWindowMenuAbout, Converter={u:LocalizationConverter}}" Click="ExecuteMenuCommand"  CommandParameter="AboutCommand"/>
             </MenuItem>
         </Menu>
         <ScrollViewer Name="ViewPlaceholder" Grid.Row="1" VerticalScrollBarVisibility="Auto">

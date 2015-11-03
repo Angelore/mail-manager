@@ -25,8 +25,16 @@
                 <MenuItem Header="{Binding Source=MainWindowMenuAbout, Converter={u:LocalizationConverter}}" Click="ExecuteMenuCommand"  CommandParameter="AboutCommand"/>
             </MenuItem>
         </Menu>
-        <ScrollViewer Name="ViewPlaceholder" Grid.Row="1" VerticalScrollBarVisibility="Auto">
-
-        </ScrollViewer>
+        <Grid Name="ViewContainer" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>            
+            <ScrollViewer Name="ViewPlaceholder" Grid.Column="0" VerticalScrollBarVisibility="Auto">
+            </ScrollViewer>
+            <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"/>
+            <RichTextBox Grid.Column="2"></RichTextBox>
+        </Grid>
     </Grid>
 </Window>

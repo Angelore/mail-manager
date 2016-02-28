@@ -24,7 +24,7 @@ namespace MailManager
 
         internal BaseMenuCommand GetCommand(string commandName)
         {
-            return _commands.FirstOrDefault(x => x.CommandName() == commandName);
+            return _commands.FirstOrDefault(x => x.CommandName == commandName);
         }
     }
 
@@ -42,10 +42,7 @@ namespace MailManager
             throw new NotImplementedException();
         }
 
-        public virtual string CommandName()
-        {
-            return "BaseCommand";
-        }
+        public virtual string CommandName { get; } = "BaseCommand";
     }
 
     internal class ExitCommand: BaseMenuCommand
@@ -58,10 +55,7 @@ namespace MailManager
             _window.Close();
         }
 
-        public override string CommandName()
-        {
-            return "ExitCommand";
-        }
+        public override string CommandName { get; } = "ExitCommand";
     }
 
     internal class AboutCommand: BaseMenuCommand
@@ -81,9 +75,6 @@ namespace MailManager
             childWindow.ShowDialog();
         }
 
-        public override string CommandName()
-        {
-            return "AboutCommand";
-        }
+        public override string CommandName { get; } = "AboutCommand";
     }
 }

@@ -5,14 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MailManager"
         xmlns:u="clr-namespace:MailManager.Utility"
+        xmlns:tm="clr-namespace:MailManager.TemplateManager"
         mc:Ignorable="d"
         Title="{Binding Source=MainWindowTitle, Converter={u:LocalizationConverter}}"
         Height="500" Width="800"
         MinHeight="500" MinWidth="800"
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type tm:TemplateManagerViewModel}">
+            <tm:TemplateManagerView/>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
+        <ContentControl Content="{Binding CurrentContentViewModel}"/>
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -35,6 +45,6 @@
             </ScrollViewer>
             <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"/>
             <RichTextBox Grid.Column="2"></RichTextBox>
-        </Grid>
+        </Grid>-->
     </Grid>
 </Window>

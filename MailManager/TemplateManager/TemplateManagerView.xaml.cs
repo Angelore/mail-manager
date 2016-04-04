@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MailManager
+namespace MailManager.TemplateManager
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for TemplateManagerView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class TemplateManagerView : UserControl
     {
-        public MainWindow()
+        public TemplateManagerView()
         {
             InitializeComponent();
         }

@@ -1,4 +1,5 @@
 ﻿<Window x:Class="MailManager.MainWindow"
+        x:Name="ApplicationWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -21,30 +22,19 @@
         </DataTemplate>
     </Window.Resources>
     <Grid>
-        <ContentControl Content="{Binding CurrentContentViewModel}"/>
-        <!--<Grid.RowDefinitions>
+        <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" IsMainMenu="True">
             <MenuItem Header="{Binding Source=MainWindowMenuFile, Converter={u:LocalizationConverter}}">
-                <MenuItem Header="{Binding Source=MainWindowMenuExit, Converter={u:LocalizationConverter}}" Click="ExecuteMenuCommand" CommandParameter="ExitCommand"/>
+                <MenuItem Header="{Binding Source=MainWindowMenuExit, Converter={u:LocalizationConverter}}" Command="{Binding ExitMenuCommand}" CommandParameter="{Binding ElementName=ApplicationWindow}"/>
             </MenuItem>
             <Separator/>
             <MenuItem Header="{Binding Source=MainWindowMenuHelp, Converter={u:LocalizationConverter}}">
-                <MenuItem Header="{Binding Source=MainWindowMenuAbout, Converter={u:LocalizationConverter}}" Click="ExecuteMenuCommand"  CommandParameter="AboutCommand"/>
+                <MenuItem Header="{Binding Source=MainWindowMenuAbout, Converter={u:LocalizationConverter}}" Command="{Binding AboutMenuCommand}" CommandParameter="{Binding ElementName=ApplicationWindow}"/>
             </MenuItem>
         </Menu>
-        <Grid Name="ViewContainer" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>            
-            <ScrollViewer Name="ViewPlaceholder" Grid.Column="0" VerticalScrollBarVisibility="Auto">
-            </ScrollViewer>
-            <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"/>
-            <RichTextBox Grid.Column="2"></RichTextBox>
-        </Grid>-->
+        <ContentControl Grid.Row="1" Content="{Binding CurrentContentViewModel}"/>
     </Grid>
 </Window>

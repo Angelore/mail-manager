@@ -8,7 +8,43 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid Margin="5">
-            <TextBlock>Hello!</TextBlock>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBox Text="{Binding FileName}"></TextBox>
+                <TextBox Text="{Binding Recipients}"/>
+            </StackPanel>
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Entries}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                                <TextBlock>Project:</TextBlock>
+                                <TextBox Text="{Binding ProjectName}"></TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                <TextBlock>Miscellaneous:</TextBlock>
+                                <TextBox Text="{Binding Misc}"></TextBox>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Button Grid.Row="2" Command="{Binding NewEntryCommand}">New entry</Button>
         </Grid>
     </Grid>
 </UserControl>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MailManager.Utility;
 using System.Globalization;
+using MailManager.TemplateManager.Templates.TemplateModels;
 
 namespace MailManager.TemplateManager
 {
@@ -13,9 +14,29 @@ namespace MailManager.TemplateManager
 
         public TemplateManagerViewModel()
         {
-            MonthNames = GetMonthNames();
+            // MonthNames = GetMonthNames().Where(x => !string.IsNullOrEmpty(x)).ToArray();
+            FileTypesList = new Dictionary<string, BindableBase>()
+            {
+                { "Ni", new NiFileViewModel() }
+            };
+            SelectedFileType = FileTypesList.First();
         }
 
+        private Dictionary<string, BindableBase> _fileTypesList;
+        public Dictionary<string, BindableBase> FileTypesList
+        {
+            get { return _fileTypesList; }
+            set { SetProperty(ref _fileTypesList, value); }
+        }
+
+        private KeyValuePair<string, BindableBase> _selectedFileType;
+        public KeyValuePair<string, BindableBase> SelectedFileType
+        {
+            get { return _selectedFileType; }
+            set { SetProperty(ref _selectedFileType, value); }
+        }
+
+        #region MonthNames
         private string[] _monthNames;
         public string[] MonthNames
         {
@@ -53,5 +74,6 @@ namespace MailManager.TemplateManager
             var culture = cultureInfo ?? CultureInfo.CurrentCulture;
             return (culture).DateTimeFormat.MonthNames;
         }
+        #endregion
     }
 }

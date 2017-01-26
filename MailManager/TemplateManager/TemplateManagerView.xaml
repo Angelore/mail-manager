@@ -5,8 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MailManager.TemplateManager"
              xmlns:u="clr-namespace:MailManager.Utility"
+             xmlns:tm="clr-namespace:MailManager.TemplateManager.Templates.TemplateModels"
+             xmlns:vt="clr-namespace:MailManager.TemplateManager.Templates.ViewTemplates"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type tm:NiFileViewModel}">
+            <vt:NiFileView/>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -18,10 +25,22 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>            
-            <ScrollViewer Name="ViewPlaceholder" Grid.Column="0" VerticalScrollBarVisibility="Auto">
-            </ScrollViewer>
+            <!--<ScrollViewer Name="ViewPlaceholder" Grid.Column="0" VerticalScrollBarVisibility="Auto">
+            </ScrollViewer>-->
+            <Grid Name="ViewPlaceholder">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ComboBox Grid.Row="0"
+                          ItemsSource="{Binding Path=FileTypesList}"
+                          SelectedItem="{Binding Path=SelectedFileType}"
+                          SelectedValuePath="Value"
+                          DisplayMemberPath="Key"/>
+                <ContentControl Grid.Row="1" Content="{Binding Path=SelectedFileType.Value}"/>
+            </Grid>
             <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"/>
-            <RichTextBox Grid.Column="2"></RichTextBox>
+            <RichTextBox Name="ViewTextBox" Grid.Column="2"></RichTextBox>
         </Grid>
     </Grid>
 </UserControl>

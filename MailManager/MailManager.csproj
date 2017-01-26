@@ -55,8 +55,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Nustache.Core, Version=1.15.3.7, Culture=neutral, PublicKeyToken=efd6f3d8f76ecd9f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nustache.1.15.3.7\lib\net20\Nustache.Core.dll</HintPath>
+    <Reference Include="Nustache.Core, Version=1.16.0.4, Culture=neutral, PublicKeyToken=efd6f3d8f76ecd9f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nustache.1.16.0.4\lib\net20\Nustache.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -93,6 +93,10 @@
       <DependentUpon>TemplateManagerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="TemplateManager\TemplateManagerViewModel.cs" />
+    <Compile Include="TemplateManager\Templates\TemplateModels\NiFileViewModel.cs" />
+    <Compile Include="TemplateManager\Templates\ViewTemplates\NiFileView.xaml.cs">
+      <DependentUpon>NiFileView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\BindableBase.cs" />
     <Compile Include="Utility\Localization.cs" />
     <Compile Include="Utility\RelayCommand.cs" />
@@ -116,6 +120,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TemplateManager\Templates\ViewTemplates\NiFileView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -129,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EmbeddedResource Include="TemplateManager\Templates\FileTemplates\ni.txt" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -143,11 +152,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TemplateManager\Templates\FileTemplates\" />
-    <Folder Include="TemplateManager\Templates\TemplateModels\" />
-    <Folder Include="TemplateManager\Templates\ViewTemplates\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

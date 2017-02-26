@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:MailManager"
         xmlns:u="clr-namespace:MailManager.Utility"
         xmlns:tm="clr-namespace:MailManager.TemplateManager"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         Title="{Binding Source=MainWindowTitle, Converter={u:LocalizationConverter}}"
         Height="500" Width="800"
@@ -28,11 +29,25 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" IsMainMenu="True">
             <MenuItem Header="{Binding Source=MainWindowMenuFile, Converter={u:LocalizationConverter}}">
-                <MenuItem Header="{Binding Source=MainWindowMenuExit, Converter={u:LocalizationConverter}}" Command="{Binding ExitMenuCommand}" CommandParameter="{Binding ElementName=ApplicationWindow}"/>
+                <MenuItem Header="{Binding Source=MainWindowMenuExit, Converter={u:LocalizationConverter}}" Command="{Binding ExitMenuCommand}" CommandParameter="{Binding ElementName=ApplicationWindow}">
+                    <MenuItem.Icon>
+                        <fa:ImageAwesome Icon="SignOut" 
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Center"
+                                     Height="14" Width="14"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <Separator/>
             <MenuItem Header="{Binding Source=MainWindowMenuHelp, Converter={u:LocalizationConverter}}">
-                <MenuItem Header="{Binding Source=MainWindowMenuAbout, Converter={u:LocalizationConverter}}" Command="{Binding AboutMenuCommand}" CommandParameter="{Binding ElementName=ApplicationWindow}"/>
+                <MenuItem Header="{Binding Source=MainWindowMenuAbout, Converter={u:LocalizationConverter}}" Command="{Binding AboutMenuCommand}" CommandParameter="{Binding ElementName=ApplicationWindow}">
+                    <MenuItem.Icon>
+                        <fa:ImageAwesome Icon="Question" 
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Center"
+                                     Height="12" Width="12"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
         </Menu>
         <ContentControl Grid.Row="1" Content="{Binding CurrentContentViewModel}" KeyboardNavigation.IsTabStop="False"/>

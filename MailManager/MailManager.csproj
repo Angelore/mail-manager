@@ -89,6 +89,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="TemplateManager\IRenderable.cs" />
     <Compile Include="TemplateManager\TemplateManagerView.xaml.cs">
       <DependentUpon>TemplateManagerView.xaml</DependentUpon>
     </Compile>

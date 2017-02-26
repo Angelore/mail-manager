@@ -37,10 +37,19 @@
                           SelectedItem="{Binding Path=SelectedFileType}"
                           SelectedValuePath="Value"
                           DisplayMemberPath="Key"/>
-                <ContentControl Grid.Row="1" Content="{Binding Path=SelectedFileType.Value}"/>
+                <ContentControl Grid.Row="1" Content="{Binding Path=SelectedFileType.Value}" KeyboardNavigation.IsTabStop="False"/>
             </Grid>
-            <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"/>
-            <RichTextBox Name="ViewTextBox" Grid.Column="2"></RichTextBox>
+            <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" KeyboardNavigation.IsTabStop="False"/>
+            <!--<RichTextBox Name="ViewTextBox" Grid.Column="2" Document="{Binding Path=RenderedContent}" KeyboardNavigation.IsTabStop="False" IsReadOnly="True">
+                <RichTextBox.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                </RichTextBox.Resources>
+            </RichTextBox>-->
+            <Border Grid.Column="2" Background="White" BorderThickness="0">
+                <TextBlock Name="ViewTextBox" Text="{Binding Path=RenderedView}" KeyboardNavigation.IsTabStop="False" Margin="5"></TextBlock>
+            </Border>
         </Grid>
     </Grid>
 </UserControl>

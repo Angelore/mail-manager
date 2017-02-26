@@ -5,8 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MailManager.TemplateManager.Templates.ViewTemplates"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             d:DesignHeight="300" d:DesignWidth="300"
+             FontSize="14">
+
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="MinWidth" Value="35" />
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid Name="Root">
         <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -14,36 +22,115 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <TextBox Text="{Binding FileName}"></TextBox>
-                <TextBox Text="{Binding Recipients}"/>
+                <TextBlock Text="File name:" Margin="0,0,3,0"/>
+                <TextBox Text="{Binding FileName, Mode=TwoWay}"/>
+                <TextBlock Text="Recipients:" Margin="3,0,3,0"/>
+                <TextBox Text="{Binding Recipients, Mode=TwoWay}"/>
             </StackPanel>
-            <ItemsControl Grid.Row="1" ItemsSource="{Binding Entries}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
+            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Entries}" KeyboardNavigation.IsTabStop="False">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="0.5" BorderBrush="Gray" Margin="0,3,0,0">
+                                <Grid Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
 
-                            <StackPanel Grid.Row="0" Orientation="Horizontal">
-                                <TextBlock>Project:</TextBlock>
-                                <TextBox Text="{Binding ProjectName}"></TextBox>
-                            </StackPanel>
+                                    <Grid Grid.Column="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                <TextBlock>Miscellaneous:</TextBlock>
-                                <TextBox Text="{Binding Misc}"></TextBox>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                                        <Grid Grid.Row="0" Margin="0,0,0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Margin="0,0,3,0">Project:</TextBlock>
+                                            <TextBox Grid.Column="1" Text="{Binding ProjectName, Mode=TwoWay}"></TextBox>
+                                        </Grid>
+
+                                        <Grid Grid.Row="1" Margin="0,0,0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Margin="0,0,3,0">Miscellaneous:</TextBlock>
+                                            <TextBox Grid.Column="1" Text="{Binding Misc, Mode=TwoWay}"></TextBox>
+                                        </Grid>
+
+                                        <!-- Time -->
+                                        <Grid Grid.Row="2" Margin="0,0,0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Margin="0,0,3,0">Start time:</TextBlock>
+                                            <TextBox Grid.Column="1" Text="{Binding StartTime, StringFormat={}{0:HH:mm}, Mode=TwoWay}"></TextBox>
+                                        </Grid>
+                                        <Grid Grid.Row="3" Margin="0,0,0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Margin="0,0,3,0">End time:</TextBlock>
+                                            <TextBox Grid.Column="1" Text="{Binding EndTime, StringFormat={}{0:HH:mm}, Mode=TwoWay}"></TextBox>
+                                        </Grid>
+                                        <Grid Grid.Row="4" Margin="0,0,0,2" Visibility="Collapsed">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Margin="0,0,3,0">Supposed end time:</TextBlock>
+                                            <TextBox Grid.Column="1" Text="{Binding SupposedEndTime, StringFormat={}{0:HH:mm}, Mode=TwoWay}"></TextBox>
+                                        </Grid>
+                                        <!-- !Time -->
+
+                                        <Grid Grid.Row="5" Margin="0,0,0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Margin="0,0,3,0">Customer:</TextBlock>
+                                            <TextBox Grid.Column="1" Text="{Binding Customer, Mode=TwoWay}"></TextBox>
+                                        </Grid>
+
+                                        <Grid Grid.Row="6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Margin="0,0,3,0">Description:</TextBlock>
+                                            <TextBox Grid.Column="1" Text="{Binding Description, Mode=TwoWay}" TextWrapping="WrapWithOverflow"></TextBox>
+                                        </Grid>
+                                    </Grid>
+                                    <Button Grid.Column="1" Margin="2,0,0,0" Command="{Binding ElementName=Root, Path=DataContext.RemoveEntryCommand}" CommandParameter="{Binding}">
+                                        <TextBlock FontSize="11"
+                                            Text="Delete" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center">
+                                            <TextBlock.LayoutTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform Angle="-90"/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </TextBlock.LayoutTransform>
+                                        </TextBlock>
+                                    </Button>
+                                </Grid>                                
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
             <Button Grid.Row="2" Command="{Binding NewEntryCommand}">New entry</Button>
         </Grid>
     </Grid>

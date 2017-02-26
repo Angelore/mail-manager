@@ -9,7 +9,7 @@ using MailManager.TemplateManager.Templates.TemplateModels;
 
 namespace MailManager.TemplateManager
 {
-    public class TemplateManagerViewModel: BindableBase
+    public class TemplateManagerViewModel: BindableBase, IDisposable
     {
 
         public TemplateManagerViewModel()
@@ -19,7 +19,17 @@ namespace MailManager.TemplateManager
             {
                 { "Ni", new NiFileViewModel() }
             };
+            foreach (var vm in FileTypesList.Select(x => x.Value as IRenderable))
+            {
+                vm.RenderRequest += ViewModel_RenderRequest;
+            }
             SelectedFileType = FileTypesList.First();
+            ViewModel_RenderRequest(SelectedFileType.Value, null);
+        }
+
+        private void ViewModel_RenderRequest(object sender, EventArgs e)
+        {
+            RenderedView = (sender as IRenderable)?.RenderThis();            
         }
 
         private Dictionary<string, BindableBase> _fileTypesList;
@@ -35,6 +45,23 @@ namespace MailManager.TemplateManager
             get { return _selectedFileType; }
             set { SetProperty(ref _selectedFileType, value); }
         }
+
+        private string _renderedView;
+        public string RenderedView
+        {
+            get { return _renderedView; }
+            set { SetProperty(ref _renderedView, value); }
+        }
+
+        #region IDisposable
+        public void Dispose()
+        {
+            foreach (var vm in FileTypesList.Where(x => x.Value is IRenderable).Select(x => x.Value as IRenderable))
+            {
+                vm.RenderRequest -= ViewModel_RenderRequest;
+            }
+        }
+        #endregion
 
         #region MonthNames
         private string[] _monthNames;

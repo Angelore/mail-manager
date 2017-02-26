@@ -1,5 +1,6 @@
 ﻿using MailManager.TemplateManager.Templates.ViewTemplates;
 using MailManager.Utility;
+using Nustache.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +13,7 @@ using System.Windows;
 
 namespace MailManager.TemplateManager.Templates.TemplateModels
 {
-    class NiFileViewModel: BindableBase
+    class NiFileViewModel: BindableBase, IRenderable, IDisposable
     {
         private string _source;
 
@@ -37,6 +38,7 @@ namespace MailManager.TemplateManager.Templates.TemplateModels
         }
 
         private ObservableCollection<NiFileEntry> _entries;
+
         public ObservableCollection<NiFileEntry> Entries
         {
             get { return _entries; }
@@ -47,25 +49,67 @@ namespace MailManager.TemplateManager.Templates.TemplateModels
         {
             var assembly = Assembly.GetExecutingAssembly();
             var reader = new StreamReader(assembly.GetManifestResourceStream("MailManager.TemplateManager.Templates.FileTemplates.ni.txt"), Encoding.GetEncoding(866));
-            var _source = reader.ReadToEnd();
+            _source = reader.ReadToEnd();
 
             FileName = "ni" + DateTime.Today.ToString("yyMMdd") + ".svb";
             Recipients = "svb";
             Entries = new ObservableCollection<NiFileEntry>();
-            Entries.Add(new NiFileEntry());
+            AddNewEntry();
 
             NewEntryCommand = new RelayCommand(AddNewEntry);
+            RemoveEntryCommand = new RelayCommand<NiFileEntry>(RemoveEntry);
         }
 
         public RelayCommand NewEntryCommand { get; private set; }
         public void AddNewEntry()
         {
-            Entries.Add(new NiFileEntry());
+            var newEntry = new NiFileEntry();
+            newEntry.ProjectName = "xxxx";
+            newEntry.Misc = "N EV TRA";
+            newEntry.Customer = "D: !_gs;";
+
+            Entries.Add(newEntry);
+            newEntry.PropertyChanged += NiFileEntry_PropertyChanged;
+            NiFileEntry_PropertyChanged(null, null);
         }
+
+        private void NiFileEntry_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            RenderRequest?.Invoke(this, null);
+        }
+
+        public RelayCommand<NiFileEntry> RemoveEntryCommand { get; private set; }
+        public void RemoveEntry(NiFileEntry entry)
+        {
+            entry.PropertyChanged -= NiFileEntry_PropertyChanged;
+            Entries.Remove(entry);
+            NiFileEntry_PropertyChanged(null, null);
+        }
+
+        #region IRenderable
+        public event EventHandler RenderRequest;
+
+        public string RenderThis()
+        {
+            return Render.StringToString(_source, this);
+        }
+        #endregion
+
+        #region IDisposable
+        public void Dispose()
+        {
+            foreach(var e in Entries)
+            {
+                e.PropertyChanged -= NiFileEntry_PropertyChanged;
+            }
+        }
+        #endregion
     }
 
     class NiFileEntry: BindableBase
     {
+        public const string ShortTimeFormat = "HH:mm";
+
         private string _projectName;
         public string ProjectName
         {
@@ -81,11 +125,12 @@ namespace MailManager.TemplateManager.Templates.TemplateModels
         }
 
         private DateTime _startTime;
-        public DateTime _StartTime
+        public DateTime StartTime
         {
             get { return _startTime; }
             set { SetProperty(ref _startTime, value); }
         }
+        public string StartTimeF { get { return StartTime.ToString(ShortTimeFormat); } }
 
         private DateTime _endTime;
         public DateTime EndTime
@@ -93,6 +138,7 @@ namespace MailManager.TemplateManager.Templates.TemplateModels
             get { return _endTime; }
             set { SetProperty(ref _endTime, value); }
         }
+        public string EndTimeF { get { return EndTime.ToString(ShortTimeFormat); } }
 
         private DateTime _supposedEndTime;
         public DateTime SupposedEndTime
@@ -100,6 +146,7 @@ namespace MailManager.TemplateManager.Templates.TemplateModels
             get { return _supposedEndTime; }
             set { SetProperty(ref _supposedEndTime, value); }
         }
+        public string SupposedEndTimeF { get { return SupposedEndTime.ToString(ShortTimeFormat); } }
 
         private string _misc;
         public string Misc

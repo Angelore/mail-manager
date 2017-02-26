@@ -35,6 +35,6 @@
                 <MenuItem Header="{Binding Source=MainWindowMenuAbout, Converter={u:LocalizationConverter}}" Command="{Binding AboutMenuCommand}" CommandParameter="{Binding ElementName=ApplicationWindow}"/>
             </MenuItem>
         </Menu>
-        <ContentControl Grid.Row="1" Content="{Binding CurrentContentViewModel}"/>
+        <ContentControl Grid.Row="1" Content="{Binding CurrentContentViewModel}" KeyboardNavigation.IsTabStop="False"/>
     </Grid>
 </Window>

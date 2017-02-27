@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using MailManager.Utility;
 using System.Globalization;
 using MailManager.TemplateManager.Templates.TemplateModels;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace MailManager.TemplateManager
 {
-    public class TemplateManagerViewModel: BindableBase, IDisposable
+    public class TemplateManagerViewModel: BindableBase, IDisposable, IMenuProvider
     {
 
         public TemplateManagerViewModel()
@@ -21,13 +23,15 @@ namespace MailManager.TemplateManager
             };
             foreach (var vm in FileTypesList.Select(x => x.Value as IRenderable))
             {
-                vm.RenderRequest += ViewModel_RenderRequest;
+                vm.RenderRequest += FileViewModel_RenderRequest;
             }
             SelectedFileType = FileTypesList.First();
-            ViewModel_RenderRequest(SelectedFileType.Value, null);
+            FileViewModel_RenderRequest(SelectedFileType.Value, null);
+
+            CopyToClipboardCommand = new RelayCommand<TextBlock>(CopyViewTextBlockToClipboard);
         }
 
-        private void ViewModel_RenderRequest(object sender, EventArgs e)
+        private void FileViewModel_RenderRequest(object sender, EventArgs e)
         {
             RenderedView = (sender as IRenderable)?.RenderThis();            
         }
@@ -53,12 +57,39 @@ namespace MailManager.TemplateManager
             set { SetProperty(ref _renderedView, value); }
         }
 
+        public RelayCommand<TextBlock> CopyToClipboardCommand { get; set; }
+        public void CopyViewTextBlockToClipboard(TextBlock textBlock)
+        {
+            Clipboard.SetText(textBlock.Text);
+        }
+
+        #region IMenuProvider
+        public string MenuItemHeader { get; set; } = "Template Manager";
+        public MenuItemViewModel GetMenuItem()
+        {
+            return new MenuItemViewModel()
+            {
+                Header = MenuItemHeader, //Utility.Localization.Get("MainWindowMenuHelp"),
+                //Children = new List<MenuItemViewModel>()
+                //{
+                //    new MenuItemViewModel()
+                //    {
+                //        Header = Utility.Localization.Get("MainWindowMenuAbout"),
+                //        Command = AboutMenuCommand,
+                //        IconName = "Question",
+                //        IconSize = 12
+                //    }
+                //}
+            };
+        }
+        #endregion
+
         #region IDisposable
         public void Dispose()
         {
             foreach (var vm in FileTypesList.Where(x => x.Value is IRenderable).Select(x => x.Value as IRenderable))
             {
-                vm.RenderRequest -= ViewModel_RenderRequest;
+                vm.RenderRequest -= FileViewModel_RenderRequest;
             }
         }
         #endregion

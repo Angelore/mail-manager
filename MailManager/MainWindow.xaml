@@ -14,42 +14,41 @@
         MinHeight="500" MinWidth="800"
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
-    <Window.DataContext>
-        <local:MainWindowViewModel/>
-    </Window.DataContext>
     <Window.Resources>
         <DataTemplate DataType="{x:Type tm:TemplateManagerViewModel}">
             <tm:TemplateManagerView/>
         </DataTemplate>
+        
+        <!-- Menu items styling -->
+        <Style TargetType="{x:Type MenuItem}">
+            <Setter Property="Header" Value="{Binding Path=Header}"/>
+            <Setter Property="Command" Value="{Binding Path=Command}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=IconName, Converter={u:NullToVisibilityConverter}}" Value="Visible">
+                    <Setter Property="Icon">
+                        <Setter.Value>
+                            <fa:ImageAwesome Icon="{Binding Path=IconName}" 
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Center"
+                                     Height="{Binding Path=IconSize}"
+                                     Width="{Binding Path=IconSize}"/>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <HierarchicalDataTemplate 
+            DataType="{x:Type local:MenuItemViewModel}"
+            ItemsSource="{Binding Path=Children}">
+        </HierarchicalDataTemplate>
+        <!-- !Menu items styling -->
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0" IsMainMenu="True">
-            <MenuItem Header="{Binding Source=MainWindowMenuFile, Converter={u:LocalizationConverter}}">
-                <MenuItem Header="{Binding Source=MainWindowMenuExit, Converter={u:LocalizationConverter}}" Command="{Binding ExitMenuCommand}" CommandParameter="{Binding ElementName=ApplicationWindow}">
-                    <MenuItem.Icon>
-                        <fa:ImageAwesome Icon="SignOut" 
-                                     VerticalAlignment="Center"
-                                     HorizontalAlignment="Center"
-                                     Height="14" Width="14"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </MenuItem>
-            <Separator/>
-            <MenuItem Header="{Binding Source=MainWindowMenuHelp, Converter={u:LocalizationConverter}}">
-                <MenuItem Header="{Binding Source=MainWindowMenuAbout, Converter={u:LocalizationConverter}}" Command="{Binding AboutMenuCommand}" CommandParameter="{Binding ElementName=ApplicationWindow}">
-                    <MenuItem.Icon>
-                        <fa:ImageAwesome Icon="Question" 
-                                     VerticalAlignment="Center"
-                                     HorizontalAlignment="Center"
-                                     Height="12" Width="12"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </MenuItem>
-        </Menu>
+        <Menu Name="MainMenu" Grid.Row="0" IsMainMenu="True" ItemsSource="{Binding MenuItems}"/>
         <ContentControl Grid.Row="1" Content="{Binding CurrentContentViewModel}" KeyboardNavigation.IsTabStop="False"/>
     </Grid>
 </Window>

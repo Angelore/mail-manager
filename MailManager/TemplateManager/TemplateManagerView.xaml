@@ -48,7 +48,16 @@
                 </RichTextBox.Resources>
             </RichTextBox>-->
             <Border Grid.Column="2" Background="White" BorderThickness="0">
-                <TextBlock Name="ViewTextBox" Text="{Binding Path=RenderedView}" KeyboardNavigation.IsTabStop="False" Margin="5"></TextBlock>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Name="ViewTextBlock" Text="{Binding Path=RenderedView}" KeyboardNavigation.IsTabStop="False" Margin="5"></TextBlock>
+                    <Button Grid.Row="1" Command="{Binding CopyToClipboardCommand}" CommandParameter="{Binding ElementName=ViewTextBlock}" Margin="5" FontSize="14">
+                        Copy to clipboard
+                    </Button>
+                </Grid>
             </Border>
         </Grid>
     </Grid>

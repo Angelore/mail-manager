@@ -24,6 +24,15 @@ namespace MailManager
         public MainWindow()
         {
             InitializeComponent();
+            var view = new MainWindowViewModel();
+            view.CloseWindowAction = this.Close;
+            view.SetSelfAsParentWindowAction = this.SetSelfAsParentWindow;
+            DataContext = view;
+        }
+
+        public void SetSelfAsParentWindow(Window window)
+        {
+            window.Owner = this;
         }
     }
 }

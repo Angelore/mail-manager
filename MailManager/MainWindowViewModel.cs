@@ -44,7 +44,21 @@ namespace MailManager
                             IconSize = 12
                         }
                     }
-                }
+                },
+                //new MenuItemViewModel()
+                //{
+                //    Header = Utility.Localization.Get("MainWindowMenuSettings"),
+                //    Children = new List<MenuItemViewModel>()
+                //    {
+                //        new MenuItemViewModel()
+                //        {
+                //            Header = Utility.Localization.Get("MainWindowMenuAbout"),
+                //            Command = AboutMenuCommand,
+                //            IconName = "Question",
+                //            IconSize = 12
+                //        }
+                //    }
+                //}
             };
 
             CurrentContentViewModel = new TemplateManager.TemplateManagerViewModel();

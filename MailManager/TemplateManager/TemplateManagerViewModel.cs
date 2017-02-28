@@ -8,6 +8,8 @@ using System.Globalization;
 using MailManager.TemplateManager.Templates.TemplateModels;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Win32;
+using System.IO;
 
 namespace MailManager.TemplateManager
 {
@@ -29,8 +31,9 @@ namespace MailManager.TemplateManager
             FileViewModel_RenderRequest(SelectedFileType.Value, null);
 
             CopyToClipboardCommand = new RelayCommand<TextBlock>(CopyViewTextBlockToClipboard);
+            SaveToFileCommand = new RelayCommand(SaveToFile);
         }
-
+        
         private void FileViewModel_RenderRequest(object sender, EventArgs e)
         {
             RenderedView = (sender as IRenderable)?.RenderThis();            
@@ -63,23 +66,33 @@ namespace MailManager.TemplateManager
             Clipboard.SetText(textBlock.Text);
         }
 
+        public RelayCommand SaveToFileCommand { get; set; }
+        private void SaveToFile()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(saveFileDialog.FileName, RenderedView, Encoding.GetEncoding("cp866"));
+            }
+        }
+
         #region IMenuProvider
-        public string MenuItemHeader { get; set; } = "Template Manager";
+        public string MenuItemHeader { get; set; } = "_Template Manager";
         public MenuItemViewModel GetMenuItem()
         {
             return new MenuItemViewModel()
             {
                 Header = MenuItemHeader, //Utility.Localization.Get("MainWindowMenuHelp"),
-                //Children = new List<MenuItemViewModel>()
-                //{
-                //    new MenuItemViewModel()
-                //    {
-                //        Header = Utility.Localization.Get("MainWindowMenuAbout"),
-                //        Command = AboutMenuCommand,
-                //        IconName = "Question",
-                //        IconSize = 12
-                //    }
-                //}
+                Children = new List<MenuItemViewModel>()
+                {
+                    new MenuItemViewModel()
+                    {
+                        Header = Utility.Localization.Get("MainWindowMenuAbout"),
+                        Command = SaveToFileCommand,
+                        IconName = "FileText",
+                        IconSize = 12
+                    }
+                }
             };
         }
         #endregion

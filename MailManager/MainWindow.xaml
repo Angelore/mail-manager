@@ -18,37 +18,34 @@
         <DataTemplate DataType="{x:Type tm:TemplateManagerViewModel}">
             <tm:TemplateManagerView/>
         </DataTemplate>
-        
-        <!-- Menu items styling -->
-        <Style TargetType="{x:Type MenuItem}">
-            <Setter Property="Header" Value="{Binding Path=Header}"/>
-            <Setter Property="Command" Value="{Binding Path=Command}"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=IconName, Converter={u:NullToVisibilityConverter}}" Value="Visible">
-                    <Setter Property="Icon">
-                        <Setter.Value>
-                            <fa:ImageAwesome Icon="{Binding Path=IconName}" 
-                                     VerticalAlignment="Center"
-                                     HorizontalAlignment="Center"
-                                     Height="{Binding Path=IconSize}"
-                                     Width="{Binding Path=IconSize}"/>
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <HierarchicalDataTemplate 
-            DataType="{x:Type local:MenuItemViewModel}"
-            ItemsSource="{Binding Path=Children}">
-        </HierarchicalDataTemplate>
-        <!-- !Menu items styling -->
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Menu Name="MainMenu" Grid.Row="0" IsMainMenu="True" ItemsSource="{Binding MenuItems}"/>
+        <Menu Name="MainMenu" Grid.Row="0" IsMainMenu="True" ItemsSource="{Binding MenuItems}">
+            <Menu.Resources>
+                <!-- [x:Shared] https://stackoverflow.com/questions/37762583/menuitem-icons-in-wpf-menu-disappear -->
+                <!-- [fa] https://github.com/charri/Font-Awesome-WPF/blob/master/README-WPF.md -->
+                <fa:ImageAwesome x:Key="menuIcon" x:Shared="false"
+                                 Icon="{Binding Path=IconName}" 
+                                 VerticalAlignment="Center" HorizontalAlignment="Center"
+                                 Height="{Binding Path=IconSize}" Width="{Binding Path=IconSize}"/>
+                <Style TargetType="{x:Type MenuItem}">
+                    <Setter Property="Header" Value="{Binding Path=Header}"/>
+                    <Setter Property="Command" Value="{Binding Path=Command}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=IconName, Converter={u:NullToVisibilityConverter}}" Value="Visible">
+                            <Setter Property="Icon" Value="{StaticResource menuIcon}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+                <HierarchicalDataTemplate DataType="{x:Type local:MenuItemViewModel}"
+                                          ItemsSource="{Binding Path=Children}">
+                </HierarchicalDataTemplate>
+            </Menu.Resources>
+        </Menu>
         <ContentControl Grid.Row="1" Content="{Binding CurrentContentViewModel}" KeyboardNavigation.IsTabStop="False"/>
     </Grid>
 </Window>

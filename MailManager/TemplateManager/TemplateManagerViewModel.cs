@@ -19,11 +19,11 @@ namespace MailManager.TemplateManager
         public TemplateManagerViewModel()
         {
             // MonthNames = GetMonthNames().Where(x => !string.IsNullOrEmpty(x)).ToArray();
-            FileTypesList = new Dictionary<string, BindableBase>()
+            FileTypesList = new Dictionary<string, BaseFileViewModel>()
             {
                 { "Ni", new NiFileViewModel() }
             };
-            foreach (var vm in FileTypesList.Select(x => x.Value as IRenderable))
+            foreach (var vm in FileTypesList.Select(x => x.Value))
             {
                 vm.RenderRequest += FileViewModel_RenderRequest;
             }
@@ -39,15 +39,15 @@ namespace MailManager.TemplateManager
             RenderedView = (sender as IRenderable)?.RenderThis();            
         }
 
-        private Dictionary<string, BindableBase> _fileTypesList;
-        public Dictionary<string, BindableBase> FileTypesList
+        private Dictionary<string, BaseFileViewModel> _fileTypesList;
+        public Dictionary<string, BaseFileViewModel> FileTypesList
         {
             get { return _fileTypesList; }
             set { SetProperty(ref _fileTypesList, value); }
         }
 
-        private KeyValuePair<string, BindableBase> _selectedFileType;
-        public KeyValuePair<string, BindableBase> SelectedFileType
+        private KeyValuePair<string, BaseFileViewModel> _selectedFileType;
+        public KeyValuePair<string, BaseFileViewModel> SelectedFileType
         {
             get { return _selectedFileType; }
             set { SetProperty(ref _selectedFileType, value); }
@@ -100,7 +100,7 @@ namespace MailManager.TemplateManager
         #region IDisposable
         public void Dispose()
         {
-            foreach (var vm in FileTypesList.Where(x => x.Value is IRenderable).Select(x => x.Value as IRenderable))
+            foreach (var vm in FileTypesList.Select(x => x.Value))
             {
                 vm.RenderRequest -= FileViewModel_RenderRequest;
             }

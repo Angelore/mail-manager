@@ -13,10 +13,8 @@ using System.Windows;
 
 namespace MailManager.TemplateManager.Templates.TemplateModels
 {
-    class NiFileViewModel: BindableBase, IRenderable, IDisposable
+    class NiFileViewModel: BaseFileViewModel, IDisposable
     {
-        private string _source;
-
         private string _fileName;
         public string FileName
         {
@@ -49,7 +47,7 @@ namespace MailManager.TemplateManager.Templates.TemplateModels
         {
             var assembly = Assembly.GetExecutingAssembly();
             var reader = new StreamReader(assembly.GetManifestResourceStream("MailManager.TemplateManager.Templates.FileTemplates.ni.txt"), Encoding.GetEncoding(866));
-            _source = reader.ReadToEnd();
+            Source = reader.ReadToEnd();
 
             FileName = "ni" + DateTime.Today.ToString("yyMMdd") + ".svb";
             Recipients = "svb";
@@ -75,7 +73,7 @@ namespace MailManager.TemplateManager.Templates.TemplateModels
 
         private void NiFileEntry_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            RenderRequest?.Invoke(this, null);
+            OnRenderRequest(this);
         }
 
         public RelayCommand<NiFileEntry> RemoveEntryCommand { get; private set; }
@@ -85,21 +83,6 @@ namespace MailManager.TemplateManager.Templates.TemplateModels
             Entries.Remove(entry);
             NiFileEntry_PropertyChanged(null, null);
         }
-
-        #region IRenderable
-        public event EventHandler RenderRequest;
-
-        public string RenderThis()
-        {
-            // By default, Nustache converts the string to html encoding, which makes russian text unreadable.
-            // Since I don't need html encoding anyway, I change default encoder to simply return input string
-            // https://github.com/jdiamond/Nustache/blob/master/Nustache.Core/Encoders.cs
-            return Render.StringToString(_source, this, new RenderContextBehaviour() { HtmlEncoder = text => text });
-
-            // Left as an example of another approach
-            // return System.Net.WebUtility.HtmlDecode(Render.StringToString(_source, this));
-        }
-        #endregion
 
         #region IDisposable
         public void Dispose()

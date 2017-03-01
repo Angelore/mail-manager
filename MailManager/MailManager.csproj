@@ -100,6 +100,7 @@
       <DependentUpon>TemplateManagerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="TemplateManager\TemplateManagerViewModel.cs" />
+    <Compile Include="TemplateManager\Templates\TemplateModels\BaseFileViewModel.cs" />
     <Compile Include="TemplateManager\Templates\TemplateModels\NiFileViewModel.cs" />
     <Compile Include="TemplateManager\Templates\ViewTemplates\NiFileView.xaml.cs">
       <DependentUpon>NiFileView.xaml</DependentUpon>

@@ -72,7 +72,7 @@ namespace MailManager.TemplateManager
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             if (saveFileDialog.ShowDialog() == true)
             {
-                File.WriteAllText(saveFileDialog.FileName, RenderedView, Encoding.GetEncoding("cp866"));
+                File.WriteAllText(saveFileDialog.FileName, RenderedView, Encoding.GetEncoding(866));
             }
         }
 

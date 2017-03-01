@@ -91,7 +91,13 @@ namespace MailManager.TemplateManager.Templates.TemplateModels
 
         public string RenderThis()
         {
-            return Render.StringToString(_source, this);
+            // By default, Nustache converts the string to html encoding, which makes russian text unreadable.
+            // Since I don't need html encoding anyway, I change default encoder to simply return input string
+            // https://github.com/jdiamond/Nustache/blob/master/Nustache.Core/Encoders.cs
+            return Render.StringToString(_source, this, new RenderContextBehaviour() { HtmlEncoder = text => text });
+
+            // Left as an example of another approach
+            // return System.Net.WebUtility.HtmlDecode(Render.StringToString(_source, this));
         }
         #endregion
 

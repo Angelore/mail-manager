@@ -95,6 +95,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\SettingsService.cs" />
     <Compile Include="TemplateManager\IRenderable.cs" />
     <Compile Include="TemplateManager\TemplateManagerView.xaml.cs">
       <DependentUpon>TemplateManagerView.xaml</DependentUpon>
